@@ -1,0 +1,67 @@
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+
+ingress:
+  enabled: false
+  annotations: {}
+  host: chart-example.local
+
+service:
+  type: ClusterIP
+  port: 80
+
+image:
+  repository: jupyter/datascience-notebook
+  pullPolicy: IfNotPresent
+  tag: latest
+
+resources: {}
+#  requests:
+#    memory: 500Mi
+#    cpu: 250m
+#  limits:
+#    memory: 2Gi
+#    cpu: 1000m
+
+# if you will create a secret with the access token
+# if left blank, helm will generate a server token for you
+tokenSecretName: ""
+
+# if you provide a literal access token here and do not specify `tokenSecretName` a secret will
+# be created with `token` and the server will be configured to use ti
+token: ""
+
+pythonRequirements: []
+
+# enable to store notebook files on s3
+s3:
+  enabled: false
+  bucket: ""
+  prefix: ""
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: false
+  annotations: {}
+  name: ""
+
+podSecurityContext: {}
+#  runAsUser: 1000
+#  fsGroup: 1000
