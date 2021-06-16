@@ -38,3 +38,7 @@ data:
     {{- range .Values.pythonRequirements }}
     {{ . }}
     {{- end }}
+{{- range $key, $val := .Values.extraConfigMapFiles }}
+  {{$key}}: |
+{{$val|indent 4}}
+{{- end}}

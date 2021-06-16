@@ -46,17 +46,26 @@ spec:
             - /bin/bash
             - -c
             - |
-              pip install -r /config/requirements.txt
+              pip install -r requirements.txt
               start.sh jupyter lab \
                 --ServerApp.token="$JUPYTERLAB_TOKEN" \
                 --ServerApp.ip='*' \
                 --ServerApp.allow_origin='*' \
                 --ServerApp.allow_root=True \
                 --ServerApp.open_browser='false' \
-                --JupyterApp.config_file /config/jupyter-config.py
+                --JupyterApp.config_file jupyter-config.py
           volumeMounts:
             - name: config-volume
-              mountPath: /config
+              mountPath: /home/jovyan/requirements.txt
+              subPath: requirements.txt
+            - name: config-volume
+              mountPath: /home/jovyan/jupyter-config.py
+              subPath: jupyter-config.py
+{{- range $key, $val := .Values.extraConfigMapFiles }}
+            - name: config-volume
+              mountPath: /home/jovyan/{{ $key }}
+              subPath: {{ $key }}
+{{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
