@@ -17,3 +17,44 @@
  under the License.
  -->
 
+# Jupyterlab Helm Chart
+
+This chart lets you install a single user instance of jupyterlab into a kubernetes cluster.
+
+There are more elaborate solutions out there (see [jupyterhub](https://zero-to-jupyterhub.readthedocs.io/en/stable/))
+, but sometimes this is all you need. 
+
+# Features
+
+## Python requirements
+
+Additional python requirements can be installed with helm config (see `pythonRequirements`).
+
+## Extra python files
+
+You can inject additional python files (e.g. containing helper functions) using `extraConfigMapFiles`
+
+For example:
+
+```yaml
+extraConfigMapFiles:
+  my_utils.py: |
+    def print_hello():
+        print("hello")
+```
+
+Then use in any notebook like so:
+
+```python
+from my_utils import print_hello
+
+print_hello()
+```
+## S3 backend
+
+You can use s3 as a storage backend for your notebooks.  See `s3` in `values.yaml`.
+
+# Acknowledgements
+
+This chart was inspired by [Deepak Sood's](https://medium.com/@deepaksood619) medium post 
+[Deploying Standalone JupyterLab on Kubernetes for Early Stage Startups](https://medium.com/analytics-vidhya/deploying-standalone-jupyterlab-on-kubernetes-for-early-stage-startups-7a1468fae289).
